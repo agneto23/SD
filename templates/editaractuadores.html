@@ -1,0 +1,152 @@
+
+{% extends "contenedor.html" %}
+{% load staticfiles %}
+{% block content %}
+
+
+    <!-- Main content -->
+    <section class="content">
+
+        <div class="row">
+
+            <div class="col-md-2">
+            </div>
+            <div class="col-md-8">
+                <div class="box box-primary">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Editar Actuador: {{ act.act_nombre }} </h3>
+
+                    </div>
+                    <div class="tabbable">
+                        <div class="well tab-content">
+                            <form  method="POST" id="formulario" enctype="multipart/form-data" class="form-horizontal" novalidate="">
+                                <fieldset>
+                                    {% csrf_token %}
+
+                                    <div class="form-group ">
+                                        <label class="col-sm-2 control-label ">
+                                            Nombre
+                                        </label>
+                                        <div class="col-sm-10">
+                                            <input name="act_nombre" id="act_nombre" class="form-control" type="text" value="{{ act.act_nombre }}">
+                                        </div>
+                                    </div>
+                                    <div class="form-group ">
+                                        <label class="col-sm-2 control-label ">
+                                            Localizacion
+                                        </label>
+                                        <div class="col-sm-10">
+                                            <input name="act_localizacion" id="act_localizacion" class="form-control" type="text" value="{{ act.act_localizacion }}">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label ">
+                                            Modo
+                                        </label>
+                                        <div class="col-sm-10">
+                                            <select class="form-control" id="act_tip" name="act_tip">
+                                                <option value="a">Automatico</option>
+                                                <option value="m">Manual</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label ">
+                                            Funcion
+                                        </label>
+                                        <div class="col-sm-10">
+                                            <select class="form-control" id="act_funcion" name="act_funcion">
+                                                <option value="e">Encendido</option>
+                                                <option value="a">Apagado</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label ">
+                                            Estado
+                                        </label>
+                                        <div class="col-sm-10">
+                                            <select class="form-control" id="act_estado" name="act_estado">
+                                                <option value="a">Activo</option>
+                                                <option value="i">Inactivo</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label ">
+                                            Dispositivo
+                                        </label>
+                                        <div class="col-sm-10">
+                                            <select class="form-control" id="dis_id" name="dis_id" >
+                                                {% for item in dis %}
+                                                    <option value="{{ item.dis_id }}">{{ item.dis_nombre }}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-actions">
+                                        <button onclick="validarFormulario()" class="btn btn-primary">EDITAR</button>
+                                    </div>
+                                </fieldset>
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+        </div>
+
+        <div class="col-md-2">
+        </div>
+        </div>
+    </section><!-- /.content -->
+
+
+    <script type="text/javascript">
+
+        var dis = "{{ act.dis_id_id }}"
+        document.getElementById("dis_id").value = dis
+
+        var est = "{{ act.act_estado }}"
+        document.getElementById("act_estado").value = est
+
+        var fun = "{{ act.act_funcion }}"
+        document.getElementById("act_funcion").value = fun
+
+        var tip = "{{ act.act_tip }}"
+        document.getElementById("act_tip").value = tip
+
+
+        function validarFormulario(){
+            document.getElementById("formulario").onsubmit=function(){
+                var v1 = document.getElementById("act_nombre").value;
+                var v2 = document.getElementById("act_localizacion").value;
+                var v3 = document.getElementById("act_funcion").value;
+                var v4 = document.getElementById("act_estado").value;
+                var v5 = document.getElementById("dis_id").value;
+                var v6 = document.getElementById("act_tip").value;
+
+                if( v1 == null || v1.length == 0 || /^\s+$/.test(v1) || v2 == null || v2.length == 0 || /^\s+$/.test(v2) || v3 == null || v3.length == 0 || /^\s+$/.test(v3) || v4 == null || v4.length == 0 || /^\s+$/.test(v4)  || v5 == null || v5.length == 0 || /^\s+$/.test(v5) || v6 == null || v6.length == 0 || /^\s+$/.test(v6) ) {
+                    var box = bootbox.alert("Todos los datos son obligatorios");
+                    box.find('.modal-content').css({ color: '#0000', 'font-size': '1.1em'});
+
+                    return false;
+                }
+            }
+            function borrarFormulario(){
+                document.getElementById("formulario").onsubmit=function(){
+                    return true;
+                }
+            }
+        }
+
+    </script>
+
+
+{% endblock content %}

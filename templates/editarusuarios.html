@@ -1,0 +1,68 @@
+
+{% extends "contenedor.html" %}
+{% load staticfiles %}
+{% block content %}
+
+
+
+
+
+
+
+    <section class="content">
+
+        <div class="row">
+
+            <div class="col-md-2">
+            </div>
+            <div class="col-md-8">
+                <div class="box box-primary">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Editar Usuario</h3>
+
+                    </div>
+                    <div class="tabbable">
+                        <div class="well tab-content">
+
+                            <div class="account-wall">
+                                <form id="formUser" class="form-group" method="post">{% csrf_token %}
+                                    <table class="table center" style="text-align:center;">
+                                        {{ form.as_table }}
+                                    </table>
+                                    <div class="">
+                                        <div align="center">
+                                            <button id="btnEnviar" name="btnEnviar" type="submit" class="btn btn-primary btn-large">Editar</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+        </div>
+
+        <div class="col-md-2">
+        </div>
+        </div>
+    </section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{% endblock content %}

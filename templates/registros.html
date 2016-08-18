@@ -1,0 +1,56 @@
+<table class="table center" style="text-align:center;">
+    <tbody >
+    <tr >
+
+        <th style="text-align:center;">Codigo</th>
+        <th style="text-align:center;">
+            Fecha
+        </th>
+        <th style="text-align:center;">
+            Usuario
+        </th>
+        <th style="text-align:center;">
+            Actuador
+        </th>
+
+        <th style="text-align:center;">
+            Descripcion
+        </th>
+
+    </tr>
+
+
+    {% for item in reg %}
+
+        <tr id="tr{{ item.id }}">
+
+
+            <td  >
+                {{ item.reg_id}}
+            </td>
+
+            <td  >
+                {{ item.reg_fecha_hora}}
+
+            </td>
+
+            <td  >
+                {{ item.id}}
+
+            </td>
+            <td  >
+                {{ item.act_id}}
+
+            </td>
+
+
+            <td  >
+                {{ item.reg_descripcion}}
+
+            </td>
+
+        </tr>
+
+    {% endfor %}
+    </tbody>
+</table>

@@ -1,0 +1,118 @@
+
+{% extends "contenedor.html" %}
+{% load staticfiles %}
+{% block content %}
+
+
+<!-- Main content -->
+<section class="content">
+
+  <div class="row">
+
+    <div class="col-md-3">
+     </div>
+    <div class="col-md-6">
+      <div class="box box-primary">
+          <div class="box-header with-border">
+            <h3 class="box-title">Ingresar Dispositivos</h3>
+
+          </div>
+          <div class="box-body">
+            <div class="row">
+            <div class="col-md-12">
+            <form role="form" name="frmNuevoUsuario" method="POST">
+                {% csrf_token %}
+                <fieldset>
+
+                    <div id="mensajeFrmNuevoUsuario">
+
+                    </div>
+
+                    <div class="form-group">
+                        <label>Nombre</label>
+                        <input class="form-control" placeholder="Nombre" name="nombre" type="text" autofocus>
+                    </div>
+                    <div class="form-group">
+                        <label>MAC</label>
+                        <input class="form-control" placeholder="Descripcion" name="mac" type="text" autofocus>
+                    </div>
+                    <div class="form-group">
+                        <label>Estado</label>
+                        <select id="estado" class="form-control select2 " data-placeholder="Usuarios" style="width: 100%;" name="estado">
+
+                            <option value="a">Activo</option>
+                            <option value="b">Inactivo</option>
+
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Ingresar Sensor</label>
+                    </div>
+                    <div class="form-group">
+                        <label>Nombre</label>
+                        <input class="form-control" placeholder="Nombre" name="nombresensor" type="text" autofocus>
+                    </div>
+                    <div class="form-group">
+                        <label>Unidad Medida</label>
+                        <input class="form-control" placeholder="Descripcion" name="unidadmedida" type="text" autofocus>
+                    </div>
+                    <div class="form-group">
+                        <label> Localizacion</label>
+                        <input class="form-control" placeholder="Nombre" name="localizacion" type="text" autofocus>
+                    </div>
+                     <div class="form-group">
+                        <label>Estado</label>
+                        <select id="estado" class="form-control select2 " data-placeholder="Usuarios" style="width: 100%;" name="estadosensor">
+
+                            <option value="a">Activo</option>
+                            <option value="b">Inactivo</option>
+
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Ingresar Actuador</label>
+                    </div>
+                    <div class="form-group">
+                        <label>Nombre</label>
+                        <input class="form-control" placeholder="Nombre" name="nombreactuador" type="text" autofocus>
+                    </div>
+                    <div class="form-group">
+                        <label> Localizacion</label>
+                        <input class="form-control" placeholder="Nombre" name="localizacionactuador" type="text" autofocus>
+                    </div>
+                     <div class="form-group">
+                        <label>Estado</label>
+                        <select id="estado" class="form-control select2 " data-placeholder="Usuarios" style="width: 100%;" name="estadoactuador">
+
+                            <option value="a">Activo</option>
+                            <option value="b">Inactivo</option>
+
+                        </select>
+                    </div>
+
+                     <button type="submit" class="btn btn-block btn-lg btn-primary"><i class="fa fa-save"></i> Ingresar </button>
+
+
+                    </fieldset>
+            </form>
+
+
+            </div>
+            </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+     </div>
+  </div>
+</section><!-- /.content -->
+
+
+<script type="text/javascript">
+
+
+
+</script>
+{% endblock content %}

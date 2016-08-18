@@ -1,0 +1,335 @@
+
+{% extends "contenedor.html" %}
+{% load staticfiles %}
+{% block content %}
+
+    <section class="content">
+        <div class="row">
+            <div class="col-md-1">
+            </div>
+            <div class="col-md-10">
+                <div class="box-header with-border">
+                    <h3 class="box-title">CONTROL HOME</h3>
+                </div>
+                <div class="tabbable">
+
+                    <ul class="nav nav-tabs form-switcher">
+                        <li class="active">
+                            <a name="html-tab" href="#hogar" data-toggle="tab" aria-expanded="true">TU HOGAR</a>
+                        </li>
+                        <li>
+                            <a name="raw-tab"  onclick="cargar()" href="#registros" data-toggle="tab">REGISTROS</a>
+                        </li>
+
+                    </ul>
+
+                    <div class="well tab-content">
+
+                        <div class="tab-pane active" id="hogar">
+
+
+                            <fieldset>
+
+                                <div class="form-group ">
+                                    <div class="col-sm-8">
+
+
+
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <input name="busqueda1" id="busqueda1" class="form-control" type="text" placeholder="Buscar Actuadores" onKeyUp="buscar1()">
+                                    </div>
+                                </div>
+
+
+                                <div id="resultadobusqueda1" >
+                                </div>
+
+                                <div id="tabla1">
+                                    <table class="table center" style="text-align:center;">
+                                        <tbody >
+                                        <tr >
+
+                                            <th style="text-align:center;">Nombre Actuador</th>
+                                            <th style="text-align:center;">
+                                                Localizacion
+                                            </th>
+                                            <th style="text-align:center;">
+                                                Estado
+                                            </th>
+
+
+                                        </tr>
+
+
+                                        {% for item in act %}
+
+                                            <tr id="tr{{ item.id }}">
+
+
+                                                <td  >
+                                                    {{ item.act_nombre}}
+                                                </td>
+
+                                                <td  >
+                                                    {{ item.act_localizacion}}
+
+                                                </td>
+
+
+                                                {% if item.act_funcion == 'e' %}
+
+                                                    <td>
+
+                                                        <input data-style="slow" data-toggle="toggle" type="checkbox" name="estado{{item.act_id}}" id="estado{{item.act_id}}" value="{{item.act_tip}}" onchange="registro('{{item.act_funcion}}','{{item.act_id}}')" checked>
+
+                                                    </td>
+                                                {% else %}
+
+                                                    <td>
+
+                                                        <input  data-style="slow" data-toggle="toggle" type="checkbox" name="estado{{item.act_id}}" id="estado{{item.act_id}}" value="{{item.act_tip}}" onchange="registro('{{item.act_funcion}}','{{item.act_id}}')" >
+
+                                                    </td>
+
+                                                {% endif %}
+
+
+
+
+
+                                            </tr>
+
+                                        {% endfor %}
+
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </fieldset>
+
+                        </div>
+
+                        <div class="tab-pane"  id="registros">
+
+                            <fieldset>
+
+                                <div  class="form-group ">
+                                    <div class="col-sm-8">
+
+
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <input  name="busqueda2" id="busqueda2" class="form-control" type="text" placeholder="Buscar Registros" onKeyUp="buscar2()">
+                                    </div>
+                                </div>
+
+
+                                <div id="resultadobusqueda2" >
+                                </div>
+
+
+                            </fieldset>
+
+
+                        </div>
+
+
+
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-1">
+            </div>
+        </div>
+
+
+
+    </section><!-- /.content -->
+
+
+
+
+    <style>
+        .slow .toggle-group { transition: left 1.5s; -webkit-transition: left 1.5s; }
+
+    </style>
+
+
+
+
+
+
+
+
+    <script>
+
+
+        function recargar() {
+            location.reload();
+        }
+
+
+        function cargar(){
+
+
+
+            var v1 = document.getElementById("busqueda2").value;
+
+
+
+
+                $.ajax({
+                    data: {"buscar1" : v1},
+                    type: "GET",
+                    url: '{% url 'cargarregistros' %}',
+                    success: function(data){
+                        $("#resultadobusqueda2").html(data);
+                        $("#tabla2").hide();
+
+
+                    }
+                });
+
+
+
+
+
+
+        }
+
+        function buscar2(){
+
+
+
+            var v1 = document.getElementById("busqueda2").value;
+
+
+
+            if (v1 != "") {
+                $.ajax({
+                    data: {"buscar1" : v1},
+                    type: "GET",
+                    url: '{% url 'buscarregistros' %}',
+                    success: function(data){
+                        $("#resultadobusqueda2").html(data);
+                        $("#tabla2").hide();
+
+
+                    }
+                });
+
+            } else {
+
+                var v1 = document.getElementById("busqueda2").value;
+
+
+
+
+                $.ajax({
+                    data: {"buscar1" : v1},
+                    type: "GET",
+                    url: '{% url 'cargarregistros' %}',
+                    success: function(data){
+                        $("#resultadobusqueda2").html(data);
+                        $("#tabla2").hide();
+
+
+                    }
+                });
+
+            };
+
+
+
+        }
+
+
+
+
+        $("input[name^='estado']").bootstrapToggle();
+
+        var dis = {{ act.count }};
+
+
+
+        for (i = 1; i <= dis; i++) {
+            var ide = "estado"+i;
+            var ide1 = "#estado"+i;
+
+
+            var v1 = document.getElementById(ide).value;
+
+            if(v1 == "a"){
+
+                $(ide1).bootstrapToggle('disable');
+            }
+        }
+
+
+
+        function registro(modo,id){
+
+            var mod = ""+modo;
+            var usu = "{{ user.id }}";
+
+
+            $.ajax({
+                data: {"funcion" : mod,"codigo":id,"usuario":usu},
+                type: "GET",
+                url: '{% url 'registros' %}',
+
+                success: function(data){
+
+
+
+                }
+
+            });
+
+
+
+
+
+        }
+
+        function cerrar() {
+            $( "#cojuberto" ).dialog( "close" );
+        }
+        function cliente(id){
+
+            var box = bootbox.dialog({
+                        title: "Sensores",
+                        message: '<div id="resultado"> ' +
+                        '</div> ',
+
+
+                    }
+            );
+
+            box.find('.modal-content').css({ color: '#0000',width:'600'});
+
+            $.ajax({
+                data: {"codigo" : id},
+                type: "GET",
+                url: '{% url 'sensores' %}',
+                success: function(data){
+                    $("#resultado").html(data);
+
+
+                }
+            });
+
+
+
+        }
+
+
+
+
+    </script>
+
+
+
+{% endblock content %}

@@ -1,0 +1,79 @@
+
+
+<div class="tab-pane" id="sensores">
+
+                            <fieldset>
+
+
+                                <table class="table center" style="text-align:center;">
+                                    <tbody >
+                                    <tr >
+
+                                        <th style="text-align:center;">Codigo</th>
+                                        <th style="text-align:center;">
+                                            Nombre
+                                        </th>
+                                        <th style="text-align:center;">
+                                            Unidad Medida
+                                        </th>
+                                        <th style="text-align:center;">
+                                            Localizacion
+                                        </th>
+                                        <th style="text-align:center;">
+                                            Estado
+                                        </th>
+                                        <th style="text-align:center;">
+                                            Tipo
+                                        </th>
+
+                                    </tr>
+
+                                    {% for item in sen %}
+
+                                        <tr id="tr{{ item.id }}">
+
+
+                                            <td  >
+                                                {{ item.sen_id}}
+                                            </td>
+
+                                            <td  >
+                                                {{ item.sen_nombre}}
+
+                                            </td>
+
+                                            <td  >
+                                                {{ item.sen_unidadmedida}}
+
+                                            </td>
+
+                                            <td  >
+                                                {{ item.sen_localizacion}}
+
+                                            </td>
+
+                                            <td  >
+                                                {{ item.sen_estado}}
+
+                                            </td>
+
+                                            <td  >
+                                                {{ item.sen_tipo}}
+
+                                            </td>
+
+
+
+
+                                        </tr>
+
+                                    {% endfor %}
+
+
+                                    <tr>
+                                    </tbody>
+                                </table>
+                            </fieldset>
+
+
+                        </div>
