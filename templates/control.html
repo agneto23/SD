@@ -277,21 +277,14 @@
 
             $.ajax({
                 data: {"funcion" : mod,"codigo":id,"usuario":usu},
+
+
                 type: "GET",
                 url: '{% url 'registros' %}',
 
                 success: function(data){
-
-
-
                 }
-
             });
-
-
-
-
-
         }
 
         function cerrar() {

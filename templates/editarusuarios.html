@@ -25,10 +25,92 @@
                         <div class="well tab-content">
 
                             <div class="account-wall">
-                                <form id="formUser" class="form-group" method="post">{% csrf_token %}
-                                    <table class="table center" style="text-align:center;">
-                                        {{ form.as_table }}
-                                    </table>
+                                <form  class="form-group" method="post" enctype="multipart/form-data" class="form-horizontal" novalidate="">{% csrf_token %}
+
+
+                                    <div class="form-group ">
+                                        <label class="col-sm-2 control-label ">
+                                            Usuario
+                                        </label>
+                                        <div class="col-sm-10">
+                                            <input style=" width: 600px ; height: 35px" type="text" placeholder="" id="txtUsername" name="txtUsername" required="true" value="{{ usuario.username }}">
+                                        </div>
+                                    </div>
+
+
+                                    <div class="form-group ">
+                                        <label class="col-sm-2 control-label ">
+                                            Nombre
+                                        </label>
+                                        <div class="col-sm-10">
+                                            <input style=" width: 600px ; height: 35px" type="text" placeholder="" id="txtFirstname" name="txtFirstname" value="{{ usuario.first_name }}" required="true">
+                                        </div>
+                                    </div>
+
+
+                                    <div class="form-group ">
+                                        <label class="col-sm-2 control-label ">
+                                            Apellido
+                                        </label>
+                                        <div class="col-sm-10">
+                                            <input style=" width: 600px ; height: 35px" type="text" placeholder="" id="txtLastname" name="txtLastname" value="{{ usuario.last_name }}" required="true">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group ">
+                                        <label class="col-sm-2 control-label ">
+                                            Correo
+                                        </label>
+                                        <div class="col-sm-10">
+                                            <input style=" width: 600px ; height: 35px" type="text" placeholder="" id="txtEmail" name="txtEmail" value="{{ usuario.email }}" required="true">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group ">
+                                        <label class="col-sm-2 control-label ">
+                                            Empresa
+                                        </label>
+                                        <div class="col-sm-10">
+                                            <select style=" width: 600px ; height: 35px" id="emp_id" name="emp_id">
+                                                <option value="" disabled selected>Escoja la empresa</option>
+                                                {% for e in empresa %}
+                                                    <option value="{{ e.emp_id }}">{{ e.emp_nombre }}</option>
+                                                {% endfor %}
+                                            </select>
+
+                                        </div>
+                                    </div>
+
+
+                                    <div class="form-group ">
+                                        <label class="col-sm-2 control-label ">
+                                            Superusuario
+                                        </label>
+                                        <div class="col-sm-10">
+                                            <input style=" width: 600px ; height: 18px" type="checkbox" name="essuperusuario" id="essuperusuario" ONCHANGE="cambio()">
+
+                                        </div>
+
+                                        <input  type="hidden" name="yapues" id="yapues">
+
+                                    </div>
+
+                                    <div class="form-group ">
+                                        <label class="col-sm-2 control-label ">
+                                            Estado
+                                        </label>
+                                        <div class="col-sm-10">
+                                            <input style=" width: 600px ; height: 18px" type="checkbox" name="estado" id="estado" ONCHANGE="cambio2()">
+
+                                        </div>
+
+                                        <input  type="hidden" name="estado1" id="estado1">
+
+                                    </div>
+
+
+
+
                                     <div class="">
                                         <div align="center">
                                             <button id="btnEnviar" name="btnEnviar" type="submit" class="btn btn-primary btn-large">Editar</button>
@@ -50,6 +132,69 @@
         </div>
     </section>
 
+
+    <script type="text/javascript">
+
+        var dis = "{{ perfil.emp_id_id }}"
+        document.getElementById("emp_id").value = dis
+
+        var sup = "{{ usuario.is_superuser }}"
+
+        if (sup == "True"){
+            document.getElementById("essuperusuario").checked = true;
+            document.getElementById("yapues").value = "True";
+
+        }else{
+
+            document.getElementById("essuperusuario").checked = false;
+            document.getElementById("yapues").value = "False";
+        }
+
+        function cambio() {
+
+            if (document.getElementById("essuperusuario").checked){
+
+                document.getElementById("essuperusuario").checked = true;
+                document.getElementById("yapues").value = "True";
+
+            }else{
+
+                document.getElementById("essuperusuario").checked = false;
+                document.getElementById("yapues").value = "False";
+
+            }
+
+        }
+
+        var est = "{{ usuario.is_active }}"
+
+        if (est == "True"){
+            document.getElementById("estado").checked = true;
+            document.getElementById("estado1").value = "True";
+
+        }else{
+
+            document.getElementById("estado").checked = false;
+            document.getElementById("estado1").value = "False";
+        }
+
+        function cambio2() {
+
+            if (document.getElementById("estado").checked){
+
+                document.getElementById("estado").checked = true;
+                document.getElementById("estado1").value = "True";
+
+            }else{
+
+                document.getElementById("estado").checked = false;
+                document.getElementById("estado1").value = "False";
+
+            }
+
+        }
+
+    </script>
 
 
 

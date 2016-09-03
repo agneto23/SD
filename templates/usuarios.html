@@ -111,7 +111,7 @@
                                 <div class="form-group ">
                                     <div class="col-sm-8">
 
-                                        <button class="btn btn-primary" onclick=" window.location.href='{% url 'ingresarusuario' %}' ">Ingresar Empresa</button>
+                                        <button class="btn btn-primary" onclick=" window.location.href='{% url 'ingresarusuario' %}' ">Ingresar Usuario</button>
 
                                     </div>
                                     <div class="col-sm-4">
@@ -146,6 +146,10 @@
 
                                             <th style="text-align:center;">
                                                 Estado
+                                            </th>
+
+                                            <th style="text-align:center;">
+                                                Superusuario
                                             </th>
 
                                             <th style="text-align:center;">
@@ -192,6 +196,11 @@
 
                                                 <td>
                                                     {{ item.usuario.is_active}}
+
+                                                </td>
+
+                                                <td>
+                                                    {{ item.usuario.is_superuser}}
 
                                                 </td>
 

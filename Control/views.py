@@ -1,4 +1,4 @@
-from django.shortcuts import render_to_response, RequestContext, redirect, HttpResponse,render
+from django.shortcuts import render_to_response, RequestContext, redirect, HttpResponse,render,get_object_or_404
 from django.contrib.auth import authenticate, login, logout
 from Control.models import *
 from .forms import *
@@ -12,9 +12,13 @@ import time
 from datetime import datetime
 import base64
 from django.db import transaction
+import json
+
+import random
+import time
+import paho.mqtt.client as mqtt
 
 import time
-
 
 
 
@@ -80,6 +84,57 @@ class crear_usuario(FormView):
                 return super(crear_usuario, self).form_valid(form)
         except Exception as e:
             return redirect('ingresarusuario')
+
+def editar_usuario(request,id):
+    emp=Empresa.objects.all()
+    usuario=get_object_or_404(User,pk=id)
+    cont={}
+    perfil=get_object_or_404(Perfil,usuario=usuario)
+    id_perfil = perfil.id
+    var = ""
+    var2 = ""
+    cont={'empresa':emp,'usuario':usuario,'perfil':perfil}
+    if request.method=='POST':
+        try:
+            with transaction.atomic():
+                print("entro try")
+
+                if request.POST['yapues'] == "True":
+                   var = True
+                else:
+                   var = False
+
+                if request.POST['estado1'] == "True":
+                    var2 = True
+                else:
+                    var2 = False
+
+                usuario = User(id=id,
+                               username=request.POST['txtUsername'],
+                               password=usuario.password,
+                               is_superuser=var,
+                               first_name=request.POST['txtFirstname'],
+                               last_name=request.POST['txtLastname'],
+                               email=request.POST['txtEmail'],
+                               is_staff=usuario.is_staff,
+                               is_active=var2,
+                               )
+                empr=Empresa.objects.get(pk=request.POST['emp_id'])
+
+                perfil = Perfil(id=id_perfil,
+                                usuario=usuario,
+                                emp_id=empr,
+                                )
+
+                usuario.save()
+                perfil.save()
+                print("listo")
+                return redirect('usuarios')
+
+        except Exception as error:
+
+            return render_to_response('editarusuarios.html', cont, context_instance=RequestContext(request))
+    return render_to_response('editarusuarios.html', cont, context_instance=RequestContext(request))
 
 
 class editUser_view(UpdateView):
@@ -244,7 +299,8 @@ def sensores(request):
 
 @login_required(login_url='/')
 def registros(request):
-
+    mensajes_Error = {}
+    datosJson = {}
     a = request.GET["codigo"]
     cod = int(a)
     actua = Actuador.objects.get(pk=cod)
@@ -258,7 +314,6 @@ def registros(request):
             usu = User.objects.get(pk=u)
             reg = Registro(reg_fecha_hora=""+time.strftime("%c"),
                            reg_descripcion="Apagado", act_id=act,id=usu, )
-
             reg.save()
 
             actu = Actuador.objects.get(pk=cod)
@@ -271,8 +326,36 @@ def registros(request):
                            act_funcion="a",
                            act_estado = actu.act_estado,
                            dis_id=disp,)
-
             act.save()
+
+            """try:
+
+                # datos = ""+{"act_id": cod, "act_funcion": "e"}.__str__()
+
+                datos2 = json.dumps({"act_id": cod, "act_funcion": "a"})
+
+                # datos1 = {"datos": datos}
+
+
+                timestamp = int(time.time())
+                broker = '25.104.220.184'
+                port = 1883
+
+                #"********************Cargando datos de JSON******************"
+                # datosJson = {"datos": datos}
+                # *********************MQTT PUBLICADOR******************
+                topic = 'SMARTHOME_ACTUADORES'
+                # message = datosJson["datos"]
+                mqttclient = mqtt.Client("mqtt-panel-test", protocol=mqtt.MQTTv311)
+                mqttclient.username_pw_set("smarthome", "ABC123..")
+                mqttclient.connect(broker, port=int(port))
+                mqttclient.publish(topic, datos2)
+
+
+            except Exception as error:
+                print("Error al guardar-->transaccion" + str(error))"""
+
+
 
     else:
 
@@ -281,7 +364,6 @@ def registros(request):
             usu = User.objects.get(pk=u)
             reg = Registro(reg_fecha_hora="" + time.strftime("%c"),
                            reg_descripcion="Encendido", act_id=act, id=usu, )
-
             reg.save()
 
             actu = Actuador.objects.get(pk=cod)
@@ -294,8 +376,35 @@ def registros(request):
                            act_funcion="e",
                            act_estado=actu.act_estado,
                            dis_id=disp, )
-
             act.save()
+
+            """ try:
+
+                #datos = ""+{"act_id": cod, "act_funcion": "e"}.__str__()
+
+                datos2 = json.dumps({"act_id": cod, "act_funcion": "e"})
+
+                #datos1 = {"datos": datos}
+
+
+                timestamp = int(time.time())
+                broker = '25.104.220.184'
+                port = 1883
+
+                "********************Cargando datos de JSON******************"
+                #datosJson = {"datos": datos}
+                # *********************MQTT PUBLICADOR******************
+                topic = 'SMARTHOME_ACTUADORES'
+                #message = datosJson["datos"]
+                mqttclient = mqtt.Client("mqtt-panel-test", protocol=mqtt.MQTTv311)
+                mqttclient.username_pw_set("smarthome", "ABC123..")
+                mqttclient.connect(broker, port=int(port))
+                mqttclient.publish(topic, datos2)
+
+
+            except Exception as error:
+                print("Error al guardar-->transaccion" + str(error))* /"""
+
 
     return render_to_response('registros.html', context_instance=RequestContext(request))
 

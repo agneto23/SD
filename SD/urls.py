@@ -51,7 +51,7 @@ urlpatterns = patterns('',
     url(r'^usuarios/ingresarempresas/$',ingresarempresas,name='ingresarempresas'),
     url(r'^usuarios/editarempresas/(?P<id>\d+)/$',editarempresas,name='editarempresas'),
     url(r'^usuarios/ingresarusuarios$', crear_usuario.as_view(),name='ingresarusuario'),
-    url(r'^usuarios/editarusuarios/(?P<pk>\d+)/$',editUser_view.as_view(),name='editarusuarios'),
+    url(r'^usuarios/editarusuarios/(?P<id>\d+)/$',editar_usuario,name='editarusuarios'),
 
     url(r'^control/cargarregistros/$',cargarregistros,name='cargarregistros'),
     url(r'^control/registros/$',registros,name='registros'),
