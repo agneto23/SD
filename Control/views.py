@@ -42,13 +42,19 @@ def control(request):
 
 @login_required(login_url='/')
 def iot(request):
+    _userid = request.user.id
+    usuario = get_object_or_404(User, id=_userid)
+    perfil = get_object_or_404(Perfil, usuario=usuario)
 
-
-    dis = Dispositivo.objects.all()
-    act = Actuador.objects.all()
-    sen = Sensor.objects.all()
+    if usuario.is_superuser:
+        dis = Dispositivo.objects.all()
+        act = Actuador.objects.all()
+        sen = Sensor.objects.all()
+    else:
+        dis = Dispositivo.objects.filter(emp_id=perfil.emp_id)
+        act = Actuador.objects.all()
+        sen = Sensor.objects.all()
     return render_to_response('iot.html',{'dis':dis,'sen':sen,'act':act}, context_instance=RequestContext(request))
-
 
 
 @login_required(login_url='/')

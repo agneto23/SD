@@ -2,9 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from datetime import date
 
-
 # Create your models here.
-
 
 class Empresa(models.Model):
     emp_id = models.AutoField(primary_key=True)
@@ -18,15 +16,11 @@ class Empresa(models.Model):
     def __str__(self):
         return self.emp_nombre
 
-
 class Perfil(models.Model):
     usuario = models.OneToOneField(User)
     emp_id = models.ForeignKey(Empresa)
     def __str__(self):
         return self.usuario.username
-
-
-
 
 class Dispositivo(models.Model):
     dis_id = models.AutoField(primary_key=True)
@@ -37,10 +31,16 @@ class Dispositivo(models.Model):
         (u'i', u'Inactivo'),
     )
     dis_estado = models.CharField(max_length=1, choices=EST_CHOICES, default='a')
+    emp_id = models.ForeignKey(Empresa)
 
     def __str__(self):
         return self.dis_nombre
 
+class Pines(models.Model):
+    pin_id = models.AutoField(primary_key=True)
+    pin_nombre=models.CharField(max_length=20)
+    pin_tipo=models.CharField(max_length=100)
+    dis_id = models.ForeignKey(Dispositivo)
 
 class Actuador(models.Model):
     act_id = models.AutoField(primary_key=True)
@@ -95,10 +95,15 @@ class Regla(models.Model):
     sen_id=models.ForeignKey(Sensor)
     act_id=models.ForeignKey(Actuador)
 
-
-class UsuarioDispositivo(models.Model):
-    username=models.ForeignKey(User)
+class DispositivoActuador(models.Model):
     dis_id=models.ForeignKey(Dispositivo)
+    act_id=models.ForeignKey(Actuador)
+    pin = models.CharField(max_length=2)
+
+class DispositivoSensor(models.Model):
+    dis_id = models.ForeignKey(Dispositivo)
+    sen_id=models.ForeignKey(Sensor)
+    pin = models.CharField(max_length=2)
 
 
 class Registro(models.Model):

@@ -65,6 +65,7 @@ REST_FRAMEWORK = {
     'PAGE_SIZE': 10
 }
 
+
 from django.core.urlresolvers import reverse_lazy
 LOGIN_URL= reverse_lazy('login')
 LOGIN_REDIRECT_URL= reverse_lazy('inicio')

@@ -29,6 +29,8 @@ router.register(r'dispositivos', DispositivoViewSet)
 router.register(r'sensores', SensorViewSet)
 router.register(r'actuadores', ActuadorViewSet)
 router.register(r'usuarios', UserViewSet)
+router.register(r'empresas', EmpresaViewSet)
+router.register(r'perfiles', PerfilViewSet)
 
 
 urlpatterns = patterns('',

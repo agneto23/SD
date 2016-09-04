@@ -4,7 +4,7 @@ from Control.models import *
 class DispositivoSerializer(serializers.ModelSerializer):
     class Meta:
         model = Dispositivo
-        fields = ('dis_id', 'dis_nombre', 'dis_mac', 'dis_estado',)
+        fields = ('dis_id', 'dis_nombre', 'dis_mac', 'dis_estado','emp_id')
 
 class SensorSerializer(serializers.ModelSerializer):
     class Meta:
@@ -19,7 +19,18 @@ class ActuadorSerializer(serializers.ModelSerializer):
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ('id','first_name','last_name', 'email','is_active')
+        fields = ('id','username','first_name','last_name', 'email','is_active')
+
+class EmpresaSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Empresa
+        fields = ('emp_id','emp_nombre','emp_estado')
+
+
+class PerfilSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Perfil
+        fields = ('usuario','emp_id')
 
 
 

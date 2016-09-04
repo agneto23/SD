@@ -70,7 +70,7 @@
             <ul class="nav navbar-nav navbar-right">
 
 
-                {% if user.is_superuser %}
+
                     <li class="hidden">
                         <a href="#page-top"></a>
                     </li>
@@ -93,25 +93,7 @@
                     <li class="page-scroll">
                         <a href="{% url 'logout' %}"> Salir</a>
                     </li>
-                {% else %}
-                    <li class="hidden">
-                        <a href="#page-top"></a>
-                    </li>
-                    <li class="page-scroll">
-                        <a href="{% url 'control' %}">Control</a>
-                    </li>
 
-                    <li class="page-scroll">
-                        <a href="">Monitoreo</a>
-                    </li>
-                    <li class="page-scroll">
-                        <a href="#contact">{{ user.username}}</a>
-                    </li>
-
-                    <li class="page-scroll">
-                        <a href="{% url 'logout' %}"> Salir</a>
-                    </li>
-                {% endif %}
 
 
             </ul>
